@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"></head><head></head><body>
+
+<!-- Heading for the simple calculator -->
+<h2>Simple Calculator</h2>
+
+<!-- Input fields for the numbers and the operation -->
+<input id="num1" type="number" placeholder="Number 1">
+<input id="num2" type="number" placeholder="Number 2">
+<select id="operation">
+&nbsp; <option value="add">+</option>
+&nbsp; <option value="subtract">-</option>
+&nbsp; <option value="multiply">*</option>
+&nbsp; <option value="divide">/</option>
+</select>
+<!-- Button to trigger the calculation -->
+<button onclick="calculate()">Calculate</button>
+
+<!-- Paragraph to display the result -->
+<p id="result"></p>
+
+<script>
+const num1=parseFloat(prompt("Please enter value"));
+const num2=parseFloat(prompt("Please enter value"));
+const operation=prompt("ENter operation (+,-,*,/):");
+let result;
+switch (operation){
+    case "+":
+    result=num1+num2;
+    break
+    case "-":
+    result=num1-num2;
+    break
+    case "*":
+    result=num1*num2;
+    break
+    case "/":
+    result=num1/num2;
+    break;
+    default
+    :result="Invalid Entry"
+
+}
+alert("RESult:" +result)
+</script>
+
+
+
+</body></html>

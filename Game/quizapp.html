@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Quiz App</h2>
+<div id="quizContainer">
+  <p id="question"></p>
+  <div id="options"></div>
+  <button onclick="nextQuestion()">Next</button>
+</div>
+<p id="result"></p>
+
+<script>
+const quizData = [
+  {
+    question: "What is the capital of France?",
+    options: ["London", "Paris", "Berlin", "Madrid"],
+    answer: "Paris"
+  },
+  {
+    question: "Which planet is known as the Red Planet?",
+    options: ["Mars", "Jupiter", "Saturn", "Earth"],
+    answer: "Mars"
+  },
+  {
+    question: "Who wrote 'Romeo and Juliet'?",
+    options: ["William Shakespeare", "Charles Dickens", "Jane Austen", "Mark Twain"],
+    answer: "William Shakespeare"
+  }
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+function loadQuestion() {
+  const questionElement = document.getElementById("question");
+  const optionsElement = document.getElementById("options");
+  const currentQuizData = quizData[currentQuestion];
+
+  questionElement.innerText = currentQuizData.question;
+  optionsElement.innerHTML = '';
+  currentQuizData.options.forEach(option => {
+    const button = document.createElement('button');
+    button.innerText = option;
+    button.onclick = () => checkAnswer(option);
+    optionsElement.appendChild(button);
+  });
+}
+
+function checkAnswer(answer) {
+  const currentQuizData = quizData[currentQuestion];
+  if (answer === currentQuizData.answer) {
+    score++;
+  }
+}
+
+function nextQuestion() {
+  currentQuestion++;
+  if (currentQuestion < quizData.length) {
+    loadQuestion();
+  } else {
+    document.getElementById("quizContainer").style.display = 'none';
+    document.getElementById("result").innerText = `You scored ${score} out of ${quizData.length}`;
+  }
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>
+<!-- function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+const shuffledQuizData = shuffle(quizData);
+ -->

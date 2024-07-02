@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image S;ider</title>
+</head>
+<body>
+    <h1>Image Slider</h1>
+    <style>
+        #slider {width: 30px; height: 200px; overflow: hidden;}
+        #slides {display: flex; transition: transform 0.5s ease-in-out;}
+        .slide {min-width:100;}
+    </style>
+    <div id="slides">
+        <img class="slide" src="image1" alt="Image 1">
+        <img class="slide" src="image2" alt="Image 2">
+        <img class="slide" src="image3" alt="Image 3">
+      </div>
+      <div>
+        <button onclick="prevSlide()">pre</button>
+        <button onclick="nextSlide()">next</button>
+
+    </div>
+
+    <script>
+        let currentSlide=0;
+        function showSlide(index){
+            const slides=document.getElementById("slides")
+            const totalSlides=slides.children.lenght;
+            if(index>=totalSlides){
+                currentSlide=0;
+
+            }
+            else if(index<0){
+                currentSlide=totalSlides-1;
+
+            }
+            else{currentSlide=index}
+            slides.style.transform=`translateX(-${currentSlide*100}%)`;
+
+
+        }
+        function nextSlide(){
+            showSlide(currentSlide+1);
+
+        }
+        function prevSlide(){
+            showSlide(currentSlide-1)
+        }
+    </script>
+      
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Character Counter</h2>
+<textarea id="textInput" oninput="countCharacters()" placeholder="Type something..."></textarea>
+<p id="charCount">Character Count: 0</p>
+
+<script>
+function countCharacters() {
+  const text = document.getElementById("textInput").value;
+  document.getElementById("charCount").innerText = `Character Count: ${text.length}`;
+}
+</script>
+
+</body>
+</html>

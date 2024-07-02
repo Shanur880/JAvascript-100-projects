@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Typing Speed Test</h2>
+<p id="quote">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<textarea id="textInput" placeholder="Start typing here..."></textarea>
+<button onclick="startTest()">Start Test</button>
+<p id="result"></p>
+
+<script>
+const quote = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+const quoteElement = document.getElementById("quote");
+const textInput = document.getElementById("textInput");
+let startTime, endTime;
+
+function startTest() {
+  textInput.disabled = false;
+  textInput.focus();
+  textInput.value = '';
+  quoteElement.innerText = quote;
+  startTime = Date.now();
+  textInput.addEventListener('input', handleInput);
+}
+
+function handleInput() {
+  const typedText = textInput.value.trim();
+  if (typedText === quote) {
+    endTime = Date.now();
+    const elapsedTime = (endTime - startTime) / 1000; // in seconds
+    const wordsPerMinute = Math.round((quote.split(' ').length / elapsedTime) * 60);
+    const accuracy = Math.round((quote.length / typedText.length) * 100);
+    document.getElementById("result").innerText = `Typing Speed: ${wordsPerMinute} WPM, Accuracy: ${accuracy}%`;
+    textInput.disabled = true;
+    textInput.removeEventListener('input', handleInput);
+  }
+}
+</script>
+
+</body>
+</html>

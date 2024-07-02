@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>FizzBuzz</h2>
+<button onclick="fizzBuzz()">Run FizzBuzz</button>
+<p id="fizzBuzzResult"></p>
+
+<script>
+function fizzBuzz() {
+  let result = "";
+  for (let i = 1; i <= 100; i++) {
+    if (i % 15 === 0) {
+      result += "FizzBuzz, ";
+    } else if (i % 3 === 0) {
+      result += "Fizz, ";
+    } else if (i % 5 === 0) {
+      result += "Buzz, ";
+    } else {
+      result += i + ", ";
+    }
+  }
+  document.getElementById("fizzBuzzResult").innerText = result.slice(0, -2);
+}
+</script>
+
+</body>
+</html>

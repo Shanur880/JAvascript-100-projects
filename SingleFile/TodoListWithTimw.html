@@ -1,0 +1,221 @@
+<!-- 
+Key Concepts:
+Create a simple to-do list application where users can add, remove, and mark tasks as completed, along with tracking the times tasks are added and deleted.
+
+Key Concepts:
+- DOM manipulation
+- Event listeners
+- Arrays 
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        #task {
+            padding: 10px;
+            width: 300px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        li.completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+        .timestamp {
+            font-size: 0.9em;
+            color: #555;
+        }
+        #recentTasks {
+            margin-top: 20px;
+        }
+        #recentTasks ul {
+            background-color: #e9f5e9;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>To-Do List</h1>
+    <input id="task" type="text" placeholder="New Task">
+    <button onclick="addTask()">Add Task</button>
+    <ul id="todoList"></ul>
+    <button onclick="showRecentTasks()">Show Recent 10 Tasks</button>
+    <div id="recentTasks" style="display:none;">
+        <h2>Recent 10 Deleted Tasks</h2>
+        <ul id="deletedTasksList"></ul>
+    </div>
+
+    <script>
+        // Array to hold the current tasks
+        const tasks = [];
+
+        // Array to hold the deleted tasks with their deletion times
+        const deletedTasks = [];
+
+        // Function to add a new task
+        function addTask() {
+            // Get the task input value
+            const taskInput = document.getElementById("task").value;
+            // Check if the task input is not empty
+            if (taskInput.trim() !== "") {
+                // Add the new task to the tasks array with current time as addedTime
+                tasks.push({ text: taskInput, completed: false, addedTime: new Date().toLocaleString() });
+                // Clear the task input field
+                document.getElementById("task").value = "";
+                // Re-render the task list
+                renderTasks();
+            } else {
+                // Alert the user if the task input is empty
+                alert("Please enter a task.");
+            }
+        }
+
+        // Function to render the tasks on the webpage
+        function renderTasks() {
+            // Get the todoList element by its ID
+            const todoList = document.getElementById("todoList");
+            // Clear the current content of the todoList element
+            todoList.innerHTML = "";
+            // Iterate through the tasks array
+            tasks.forEach((task, index) => {
+                // Create a new list item element
+                const li = document.createElement("li");
+                // Set the inner HTML of the list item to the task text
+                li.innerHTML = task.text;
+                // If the task is completed, add the 'completed' class
+                if (task.completed) {
+                    li.classList.add("completed");
+                }
+                // Add an onclick event to toggle the task's completion status
+                li.onclick = () => toggleTask(index);
+                // Create a delete button
+                const deleteButton = document.createElement("button");
+                // Set the button text to "Delete"
+                deleteButton.innerText = "Delete";
+                // Add an onclick event to delete the task
+                deleteButton.onclick = (event) => {
+                    event.stopPropagation(); // Prevent click event from triggering toggleTask
+                    deleteTask(index);
+                };
+                // Append the delete button to the list item
+                li.appendChild(deleteButton);
+                // Create a span element for the timestamp
+                const timestamp = document.createElement("span");
+                // Set the class name for styling
+                timestamp.className = "timestamp";
+                // Set the timestamp text to the added time
+                timestamp.innerText = `Added: ${task.addedTime}`;
+                // Append the timestamp to the list item
+                li.appendChild(timestamp);
+                // Append the list item to the todoList element
+                todoList.appendChild(li);
+            });
+        }
+
+        // Function to toggle the completion status of a task
+        function toggleTask(index) {
+            // Toggle the completed status of the task at the given index
+            tasks[index].completed = !tasks[index].completed;
+            // Re-render the task list
+            renderTasks();
+        }
+
+        // Function to delete a task
+        function deleteTask(index) {
+            // Remove the task at the given index from the tasks array
+            const [deletedTask] = tasks.splice(index, 1);
+            // Record the current time as the deletion time
+            deletedTask.deletionTime = new Date().toLocaleString();
+            // Add the deleted task to the deletedTasks array
+            deletedTasks.push(deletedTask);
+            // Re-render the task list
+            renderTasks();
+        }
+
+        // Function to show the 10 most recent deleted tasks
+        function showRecentTasks() {
+            // Get the recentTasks and deletedTasksList elements by their IDs
+            const recentTasksDiv = document.getElementById("recentTasks");
+            const deletedTasksList = document.getElementById("deletedTasksList");
+            // Clear the current content of the deletedTasksList element
+            deletedTasksList.innerHTML = ""; // Clear the list before populating
+
+            // Get the last 10 deleted tasks, reversed to show the most recent first
+            const recentDeletedTasks = deletedTasks.slice(-10).reverse();
+            // Iterate through the recentDeletedTasks array
+            recentDeletedTasks.forEach(task => {
+                // Create a new list item element
+                const li = document.createElement("li");
+                // Set the inner HTML of the list item to the task text, added time, and deletion time
+                li.innerHTML = `${task.text} - Added at: ${task.addedTime}, Deleted at: ${task.deletionTime}`;
+                // Append the list item to the deletedTasksList element
+                deletedTasksList.appendChild(li);
+            });
+
+            // Display the recentTasksDiv element
+            recentTasksDiv.style.display = "block";
+        }
+
+        // Initial render of the task list
+        renderTasks();
+    </script>
+
+</body>
+</html>
+
+<!-- Detailed Explanation of Functions and Their Usages:
+addTask():
+
+Purpose: Adds a new task to the tasks array and renders the updated task list.
+Reason: Allows users to add new tasks to the to-do list.
+Usage: Triggered when the "Add Task" button is clicked. It reads the input, validates it, records the current time, and calls renderTasks() to update the displayed list.
+renderTasks():
+
+Purpose: Renders the tasks in the tasks array to the DOM.
+Reason: Keeps the displayed task list up-to-date with the current state of the tasks array.
+Usage: Called whenever the tasks array is modified (e.g., when tasks are added, deleted, or toggled). It iterates over the tasks array, creates list items for each task, and appends them to the todoList element.
+toggleTask(index):
+
+Purpose: Toggles the completion status of a task.
+Reason: Allows users to mark tasks as completed or incomplete.
+Usage: Triggered when a task list item is clicked. It changes the completed status of the task at the given index and calls renderTasks() to update the displayed list.
+deleteTask(index):
+
+Purpose: Deletes a task from the tasks array and records its deletion time.
+Reason: Allows users to remove tasks from the to-do list and keeps track of when tasks are deleted.
+Usage: Triggered when the delete button of a task list item is clicked. It removes the task at the given index from the tasks array, records the current time as the deletion time, adds the task to the deletedTasks array, and calls renderTasks() to update the displayed list.
+showRecentTasks():
+
+Purpose: Displays the 10 most recent deleted tasks along with their added and deletion times.
+Reason: Provides users with a history of recently deleted tasks for reference.
+Usage: Triggered when the "Show Recent 10 Tasks" button is clicked. It populates the deletedTasksList element with the last 10 deleted tasks from the deletedTasks array and displays the recentTasks div. -->

@@ -1,0 +1,136 @@
+/* Basic button styles */
+.button {
+    padding: 0.5rem 1rem;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    text-transform: uppercase;
+    border-radius: 0.25rem;
+}
+
+/* Button variants */
+.button-primary {
+    background-color: #007bff;
+    color: white;
+}
+.button-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+.button-danger {
+    background-color: #dc3545;
+    color: white;
+}
+.button-success {
+    background-color: #28a745;
+    color: white;
+}
+
+/* Button sizes */
+.button-small {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+}
+.button-medium {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+}
+.button-large {
+    font-size: 1.25rem;
+    padding: 0.75rem 1.5rem;
+}
+
+/* Full width button */
+.button-fullwidth {
+    width: 100%;
+}
+
+/* Button hover effect */
+.button:hover {
+    transform: translateY(-2px);
+}
+
+/* Button active state */
+.button:active {
+    transform: translateY(0);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+
+/* Button focus state */
+.button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+/* Button disabled state */
+.button:disabled {
+    background-color: #c0c0c0;
+    cursor: not-allowed;
+}
+
+/* Button after pseudo-element */
+.button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.button:hover::after {
+    opacity: 1;
+}
+
+/* Loading state */
+.loader {
+    border: 2px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 2px solid #3498db;
+    width: 14px;
+    height: 14px;
+    animation: spin 2s linear infinite;
+    margin-right: 0.5rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Tooltip styling */
+.button[data-tooltip]:hover::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.button[data-tooltip]:hover::before {
+    opacity: 1;
+}
+
+/* Button icon styling */
+.button-icon {
+    margin-right: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}

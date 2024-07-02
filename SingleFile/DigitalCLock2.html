@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clock</title>
+</head>
+<body>
+    <!-- Heading for the clock -->
+    <h1>Digital Clock</h1>
+    
+    <!-- Paragraph element to display the clock -->
+    <p id="clockDisplay"></p>
+
+    <!-- JavaScript to update the clock -->
+    <script>
+        function updateClock() {
+            // Get the current date and time
+            const now = new Date();
+            
+            // Get the hours, minutes, and seconds
+            let hours = now.getHours();
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            
+            // Determine AM or PM
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            
+            // Convert 24-hour time to 12-hour time
+            hours = hours % 12;
+            hours = hours ? hours : 12; // The hour '0' should be '12'
+            hours = hours.toString().padStart(2, '0');
+
+            // Update the text content of the clock display
+            document.getElementById("clockDisplay").innerText = `${hours}:${minutes}:${seconds} ${ampm}`;
+        }
+
+        // Update the clock every second
+        setInterval(updateClock, 1000);
+        
+        // Initial call to display the clock immediately on page load
+        updateClock();
+    </script>
+
+</body>
+</html>
+
+<!-- 
+    Alternative script for a 24-hour format clock
+
+    <script>
+        function updateClock() {
+            // Get the current date and time
+            const now = new Date();
+
+            // Get the hours, minutes, and seconds
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+
+            // Update the text content of the clock display
+            document.getElementById("clockDisplay").innerText = `${hours}:${minutes}:${seconds}`;
+        }
+
+        // Update the clock every second
+        setInterval(updateClock, 1000);
+
+        // Initial call to display the clock immediately on page load
+        updateClock();
+    </script>
+-->

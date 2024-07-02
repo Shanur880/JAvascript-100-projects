@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Styles for light mode */
+        body.light-mode {
+            background-color: white;
+            color: black;
+        }
+
+        /* Styles for dark mode */
+        body.dark-mode {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <!-- Heading for the page -->
+    <h1>Light/Dark Toggle</h1>
+    
+    <!-- Button to toggle between light and dark modes -->
+    <button onclick="toggleMode()">Toggle Mode</button>
+    
+    <script>
+        // JavaScript function to toggle between light and dark modes
+        function toggleMode() {
+            const body = document.body; // Selecting the body element
+
+            // Check if body currently has light-mode class
+            if (body.classList.contains('light-mode')) {
+                // Switch to dark mode if currently in light mode
+                body.classList.replace('light-mode', 'dark-mode');
+            } else {
+                // Switch to light mode if currently in dark mode
+                body.classList.replace('dark-mode', 'light-mode');
+            }
+        }
+    </script>
+</body>
+</html>
+<!--Explanation and Comments:
+DOCTYPE Declaration: <!DOCTYPE html> specifies the document type and version of HTML being used, which is HTML5 in this case.
+
+HTML Structure:
+
+<html lang="en">: Defines the root element of the document with the language attribute set to English.
+<head>: Contains metadata about the document, such as character set, viewport settings, and the document title.
+<meta charset="UTF-8">: Specifies the character encoding for the document (UTF-8, which supports a wide range of characters).
+<meta name="viewport" content="width=device-width, initial-scale=1.0">: Ensures the webpage adapts to various device screen sizes.
+<title>Document</title>: Sets the title of the document shown in the browser tab.
+CSS Styling:
+
+Defines two CSS classes: .light-mode and .dark-mode applied to the body.
+.light-mode sets white background with black text.
+.dark-mode sets black background with white text.
+Body Content:
+
+<body class="light-mode">: Initially sets the body to use the light-mode class.
+<h1>Light/Dark Toggle</h1>: Heading indicating the purpose of the page.
+<button onclick="toggleMode()">Toggle Mode</button>: Button that triggers the toggleMode() function when clicked.
+JavaScript Functionality:
+
+<script>: Contains JavaScript code for the functionality.
+function toggleMode() { ... }: Defines the toggleMode() function.
+const body = document.body;: Selects the <body> element.
+Checks the current mode (light-mode or dark-mode) using classList.contains().
+Depending on the current mode, toggles between light-mode and dark-mode using classList.replace().
+Comments:
+Accessibility: This approach provides a simple way to toggle between light and dark modes, enhancing accessibility and user experience.
+JavaScript: Uses vanilla JavaScript to manipulate the DOM, which is straightforward and suitable for basic functionality like this.
+CSS: The styles defined ensure readability and usability in both light and dark modes.
+Overall, this code snippet demonstrates a fundamental implementation of a light/dark mode switcher using HTML, CSS, and JavaScript.
+
+  -->

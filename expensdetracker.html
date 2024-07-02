@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Expense Tracker</h2>
+<label for="expenseInput">Add Expense:</label>
+<input type="text" id="expenseInput" placeholder="Enter expense">
+<button onclick="addExpense()">Add</button>
+<ul id="expenseList"></ul>
+
+<script>
+let expenses = [];
+
+function addExpense() {
+  const expense = document.getElementById("expenseInput").value.trim();
+  if (expense !== '') {
+    expenses.push(expense);
+    updateExpenseList();
+    saveExpensesToLocalStorage();
+    document.getElementById("expenseInput").value = '';
+  }
+}
+
+function updateExpenseList() {
+  const expenseList = document.getElementById("expenseList");
+  expenseList.innerHTML = '';
+  expenses.forEach(expense => {
+    const li = document.createElement('li');
+    li.innerText = expense;
+    expenseList.appendChild(li);
+  });
+}
+
+function saveExpensesToLocalStorage() {
+  localStorage.setItem('expenses', JSON.stringify(expenses));
+}
+
+function loadExpensesFromLocalStorage() {
+  const storedExpenses = localStorage.getItem('expenses');
+  expenses = storedExpenses ? JSON.parse(storedExpenses) : [];
+  updateExpenseList();
+}
+
+// Load existing expenses on page load
+window.onload = loadExpensesFromLocalStorage;
+</script>
+
+</body>
+</html>

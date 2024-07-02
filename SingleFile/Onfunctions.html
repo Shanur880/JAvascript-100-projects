@@ -1,0 +1,179 @@
+<!-- Enhancements made:
+
+handleCanPlay: Added style changes to the status text.
+handleCanPlayThrough: Added bold styling to the status text.
+handleChange: Changed the background color of the status text.
+handleClick: Increased the font size of the status text.
+handleClose: Underlined the status text.
+handleCopy: Changed the text color to blue.
+handleCut: Changed the text color to red.
+handleCueChange: Changed the background color of the status text.
+handleScroll: Changed the text color to orange while scrolling, reverting to black when scrolling ends. -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Event Attribute Examples</title>
+    <style>
+        #contextMenu {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 12px #aaa;
+            z-index: 1000;
+        }
+        #contextMenu ul {
+            list-style-type: none;
+            padding: 10px;
+            margin: 0;
+        }
+        #contextMenu ul li {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        #contextMenu ul li:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Event Attribute Examples</h2>
+
+<!-- oncanplay and oncanplaythrough -->
+<video id="video" width="320" height="240" controls oncanplay="handleCanPlay()" oncanplaythrough="handleCanPlayThrough()">
+    <source src="your-video-file.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+<p id="video-status"></p>
+
+<!-- onchange -->
+<select id="select" onchange="handleChange()">
+    <option value="">Select an option</option>
+    <option value="option1">Option 1</option>
+    <option value="option2">Option 2</option>
+</select>
+<p id="select-status"></p>
+
+<!-- onclick -->
+<button onclick="handleClick()">Click me</button>
+<p id="click-status"></p>
+
+<!-- onclose (this is part of the dialog element) -->
+<dialog id="dialog" onclose="handleClose()">This is a dialog. <button onclick="closeDialog()">Close</button></dialog>
+<button onclick="openDialog()">Open Dialog</button>
+<p id="dialog-status"></p>
+
+<!-- oncontextmenu -->
+<div oncontextmenu="handleContextMenu(event)" style="border: 1px solid black; width: 200px; height: 100px;">
+    Right-click inside this box
+</div>
+<div id="contextMenu">
+    <ul>
+        <li onclick="handleCopy()">Copy</li>
+        <li onclick="handleCut()">Cut</li>
+    </ul>
+</div>
+<p id="contextmenu-status"></p>
+
+<!-- oncopy and oncut -->
+<textarea id="textarea" oncopy="handleCopy()" oncut="handleCut()" placeholder="Try copying or cutting text"></textarea>
+<p id="copycut-status"></p>
+
+<!-- oncuechange -->
+<video id="video-with-cues" width="320" height="240" controls oncuechange="handleCueChange()">
+    <source src="your-video-file-with-cues.mp4" type="video/mp4">
+    <track src="your-subtitles.vtt" kind="subtitles" srclang="en" label="English">
+    Your browser does not support the video tag.
+</video>
+<p id="cuechange-status"></p>
+
+<!-- onscroll and onscrollend -->
+<div id="scrollable-div" onscroll="handleScroll()" style="border: 1px solid black; width: 200px; height: 100px; overflow: scroll;">
+    <div style="height: 300px; width: 200px;">Scroll me</div>
+</div>
+<p id="scroll-status"></p>
+
+<script>
+    function handleCanPlay() {
+        document.getElementById('video-status').innerText = 'Video can play.';
+        alert('Video can start playing!');
+        document.getElementById('video-status').style.color = 'green';
+    }
+
+    function handleCanPlayThrough() {
+        document.getElementById('video-status').innerText = 'Video can play through without buffering.';
+        console.log('Video is ready to play through.');
+        document.getElementById('video-status').style.fontWeight = 'bold';
+    }
+
+    function handleChange() {
+        const select = document.getElementById('select');
+        document.getElementById('select-status').innerText = 'Selected: ' + select.value;
+        alert('You selected: ' + select.value);
+        document.getElementById('select-status').style.backgroundColor = '#f0f0f0';
+    }
+
+    function handleClick() {
+        document.getElementById('click-status').innerText = 'Button was clicked!';
+        console.log('Button was clicked!');
+        document.getElementById('click-status').style.fontSize = '1.5em';
+    }
+
+    function openDialog() {
+        document.getElementById('dialog').showModal();
+    }
+
+    function closeDialog() {
+        document.getElementById('dialog').close();
+    }
+
+    function handleClose() {
+        document.getElementById('dialog-status').innerText = 'Dialog was closed.';
+        console.log('Dialog closed.');
+        document.getElementById('dialog-status').style.textDecoration = 'underline';
+    }
+
+    function handleContextMenu(event) {
+        event.preventDefault();
+        const menu = document.getElementById('contextMenu');
+        menu.style.display = 'block';
+        menu.style.left = event.pageX + 'px';
+        menu.style.top = event.pageY + 'px';
+        document.addEventListener('click', () => menu.style.display = 'none', { once: true });
+    }
+
+    function handleCopy() {
+        document.getElementById('copycut-status').innerText = 'Content was copied.';
+        alert('Content copied to clipboard.');
+        document.getElementById('copycut-status').style.color = 'blue';
+    }
+
+    function handleCut() {
+        document.getElementById('copycut-status').innerText = 'Content was cut.';
+        console.log('Content cut to clipboard.');
+        document.getElementById('copycut-status').style.color = 'red';
+    }
+
+    function handleCueChange() {
+        document.getElementById('cuechange-status').innerText = 'Cue change detected.';
+        alert('Subtitle or cue change detected.');
+        document.getElementById('cuechange-status').style.backgroundColor = '#e0e0e0';
+    }
+
+    function handleScroll() {
+        document.getElementById('scroll-status').innerText = 'Scrolling...';
+        document.getElementById('scroll-status').style.color = 'orange';
+        clearTimeout(handleScroll.timeout);
+        handleScroll.timeout = setTimeout(() => {
+            document.getElementById('scroll-status').innerText = 'Scroll ended.';
+            console.log('Scroll ended.');
+            document.getElementById('scroll-status').style.color = 'black';
+        }, 150); // Adjust the delay as needed
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  table { margin: auto; }
+  td { width: 50px; height: 50px; text-align: center; font-size: 24px; cursor: pointer; border: 1px solid black; }
+</style>
+</head>
+<body>
+
+<h2>Tic-Tac-Toe</h2>
+<table>
+  <tr>
+    <td id="cell00" onclick="makeMove(0, 0)"></td>
+    <td id="cell01" onclick="makeMove(0, 1)"></td>
+    <td id="cell02" onclick="makeMove(0, 2)"></td>
+  </tr>
+  <tr>
+    <td id="cell10" onclick="makeMove(1, 0)"></td>
+    <td id="cell11" onclick="makeMove(1, 1)"></td>
+    <td id="cell12" onclick="makeMove(1, 2)"></td>
+  </tr>
+  <tr>
+    <td id="cell20" onclick="makeMove(2, 0)"></td>
+    <td id="cell21" onclick="makeMove(2, 1)"></td>
+    <td id="cell22" onclick="makeMove(2, 2)"></td>
+  </tr>
+</table>
+<p id="message"></p>
+
+<script>
+let board = [
+  ["", "", ""], // Represents the game board with initial empty cells
+  ["", "", ""],
+  ["", "", ""]
+];
+let currentPlayer = "X"; // Tracks the current player's turn, starts with X
+
+// Function to handle a player making a move
+function makeMove(row, col) {
+  let cell = document.getElementById(`cell${row}${col}`); // Find the cell element by its ID
+  if (board[row][col] === "") { // Check if the cell is empty
+    board[row][col] = currentPlayer; // Update the board with current player's mark
+    cell.innerText = currentPlayer; // Update the UI to show the current player's mark
+    if (checkWin()) { // Check if the current player has won
+      document.getElementById("message").innerText = `${currentPlayer} wins!`;
+    } else if (board.flat().every(cell => cell !== "")) { // Check if it's a draw
+      document.getElementById("message").innerText = "It's a draw!";
+    } else {
+      currentPlayer = currentPlayer === "X" ? "O" : "X"; // Switch turns to the next player
+    }
+  }
+}
+
+// Function to check if the current player has won
+function checkWin() {
+  const winPatterns = [
+    [[0, 0], [0, 1], [0, 2]], // Rows
+    [[1, 0], [1, 1], [1, 2]],
+    [[2, 0], [2, 1], [2, 2]],
+    [[0, 0], [1, 0], [2, 0]], // Columns
+    [[0, 1], [1, 1], [2, 1]],
+    [[0, 2], [1, 2], [2, 2]],
+    [[0, 0], [1, 1], [2, 2]], // Diagonals
+    [[0, 2], [1, 1], [2, 0]]
+  ];
+  // Check each winning pattern to see if current player has marked all positions
+  return winPatterns.some(pattern => 
+    pattern.every(([row, col]) => board[row][col] === currentPlayer)
+  );
+}
+</script>
+
+</body>
+</html>
+<!-- HTML Structure: Defines a Tic-Tac-Toe game board using a <table> with clickable <td> elements. Each <td> has an id attribute that corresponds to its position on the board (cell00 to cell22).
+
+JavaScript Variables:
+
+board: Represents the game board as a 3x3 array initialized with empty strings ("").
+currentPlayer: Tracks whose turn it is, starting with "X".
+makeMove Function:
+
+Usage: Triggered when a cell (<td>) is clicked.
+Functionality:
+Finds the clicked cell based on its row and column.
+Checks if the selected cell is empty ("").
+Updates the board array with the current player's mark (X or O).
+Updates the UI to display the current player's mark in the clicked cell.
+Checks for a win using the checkWin() function.
+Displays a message if the current player wins or if it's a draw.
+Switches turns to the next player (X to O or vice versa).
+checkWin Function:
+
+Usage: Called within makeMove to determine if the current player has won after making a move.
+Functionality:
+Defines winning patterns (rows, columns, diagonals) in a multidimensional array.
+Checks each pattern to see if the current player (X or O) has marked all positions in any pattern.
+Returns true if a winning pattern is found, otherwise false.
+CSS Styling: Provides basic styling for the game board (table and td). -->

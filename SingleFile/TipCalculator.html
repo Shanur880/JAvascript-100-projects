@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Tp Calculator</h1>
+    <input type="number" id="billAmount" placeholder="Total Bill Amount">
+    <input type="number" id="tipPercentage" placeholder="Tip Percentage">
+    <button onclick="calculateTip()">Calculate the tip</button>
+    <p id="tipResult"></p>
+    <script>
+        function calculateTip(){
+            const billAmount=parseFloat(document.getElementById("billAmount").value);
+            const tipPercentage=parseFloat(document.getElementById("tipPercentage").value);
+            const tip=billAmount *(tipPercentage/100);
+            document.getElementById("tipResult").innerText =`Tip Amount :  $${tip.toFixed(25)}`;
+        }
+    </script>
+</body>
+</html>
+<!-- User input
+Basic arithmetic operations -->

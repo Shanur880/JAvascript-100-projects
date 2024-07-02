@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Rock , Paper , Scissor</h1>
+    <button onclick="play('rock')">Rock</button>
+    <button onclick="play('paper')">Paper</button>
+    <button onclick="play('Scissor')">Scissor</button>
+    <p id="result"></p>
+    <script>
+        function play(userChoice){
+            const choices=['rock','paper','scissors']
+            const computerChoice=choice[Math.floor(Math.random()*choice.lenght)];
+            let result;
+            if (userChoice===computerChoice){
+                result='its a draw'
+            }
+            else if (
+                (userChoice==='rock' && computerChoice==='scissors')||
+                (userChoice==='paper' && computerChoice==='rock') ||
+                (userChoice==='scissors' && computerChoice==='paper')
+            ){
+                result="You win!";
+
+            }
+            else{
+                result="You Lose !"
+            }
+            document.getElementById("result").innerText=`Computer choose ${computerChoice}. ${result}`;
+        }
+    </script>
+</body>
+</html>
+<!-- function play(userChoice) {
+  const choices = ['rock', 'paper', 'scissors'];
+  const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+  let result;
+
+  switch (userChoice + computerChoice) {
+    case 'rockscissors':
+    case 'paperrock':
+    case 'scissorspaper':
+      result = "You win!";
+      break;
+    case 'rockpaper':
+    case 'paperscissors':
+    case 'scissorsrock':
+      result = "You lose!";
+      break;
+    default:
+      result = "It's a draw!";
+      break;
+  }
+
+  document.getElementById("result").innerText = `Computer chose ${computerChoice}. ${result}`;
+}
+ -->

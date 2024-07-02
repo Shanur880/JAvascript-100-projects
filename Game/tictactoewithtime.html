@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  table { margin: auto; }
+  td { width: 50px; height: 50px; text-align: center; font-size: 24px; cursor: pointer; border: 1px solid black; }
+</style>
+</head>
+<body>
+
+<h2>Tic-Tac-Toe</h2>
+<table>
+  <tr>
+    <td id="cell00" onclick="makeMove(0, 0)"></td>
+    <td id="cell01" onclick="makeMove(0, 1)"></td>
+    <td id="cell02" onclick="makeMove(0, 2)"></td>
+  </tr>
+  <tr>
+    <td id="cell10" onclick="makeMove(1, 0)"></td>
+    <td id="cell11" onclick="makeMove(1, 1)"></td>
+    <td id="cell12" onclick="makeMove(1, 2)"></td>
+  </tr>
+  <tr>
+    <td id="cell20" onclick="makeMove(2, 0)"></td>
+    <td id="cell21" onclick="makeMove(2, 1)"></td>
+    <td id="cell22" onclick="makeMove(2, 2)"></td>
+  </tr>
+</table>
+<p id="message"></p>
+
+<script>
+let board = [
+  ["", "", ""], // Represents the game board with initial empty cells
+  ["", "", ""],
+  ["", "", ""]
+];
+let currentPlayer = "X"; // Tracks the current player's turn, starts with X
+let wins = { "X": 0, "O": 0 }; // Object to track wins for each player
+let startTime = null; // Variable to store start time when a player starts their move
+
+// Function to handle a player making a move
+function makeMove(row, col) {
+  let cell = document.getElementById(`cell${row}${col}`); // Find the cell element by its ID
+  if (board[row][col] === "") { // Check if the cell is empty
+    board[row][col] = currentPlayer; // Update the board with current player's mark
+    cell.innerText = currentPlayer; // Update the UI to show the current player's mark
+
+    if (checkWin()) { // Check if the current player has won
+      let endTime = new Date(); // Get the time when the game ended
+      let timeTaken = (endTime - startTime) / 1000; // Calculate time taken in seconds
+      wins[currentPlayer]++; // Increment the win count for the current player
+      alert(`${currentPlayer} wins in ${timeTaken} seconds!`); // Alert the win message with time taken
+      updateMessage(); // Update message to display current win status
+      resetGame(); // Reset the game for a new round
+    } else if (board.flat().every(cell => cell !== "")) { // Check if it's a draw
+      document.getElementById("message").innerText = "It's a draw!";
+      resetGame(); // Reset the game for a new round
+    } else {
+      startTime = new Date(); // Start the timer when the player starts their move
+      currentPlayer = currentPlayer === "X" ? "O" : "X"; // Switch turns to the next player
+      updateMessage(); // Update message to display current player's turn
+    }
+  }
+}
+
+// Function to check if the current player has won
+function checkWin() {
+  const winPatterns = [
+    [[0, 0], [0, 1], [0, 2]], // Rows
+    [[1, 0], [1, 1], [1, 2]],
+    [[2, 0], [2, 1], [2, 2]],
+    [[0, 0], [1, 0], [2, 0]], // Columns
+    [[0, 1], [1, 1], [2, 1]],
+    [[0, 2], [1, 2], [2, 2]],
+    [[0, 0], [1, 1], [2, 2]], // Diagonals
+    [[0, 2], [1, 1], [2, 0]]
+  ];
+  // Check each winning pattern to see if current player has marked all positions
+  return winPatterns.some(pattern => 
+    pattern.every(([row, col]) => board[row][col] === currentPlayer)
+  );
+}
+
+// Function to update the message displayed on the page
+function updateMessage() {
+  document.getElementById("message").innerText = `Player X Wins: ${wins["X"]} | Player O Wins: ${wins["O"]}`;
+}
+
+// Function to reset the game board and variables for a new round
+function resetGame() {
+  board = [
+    ["", "", ""],
+    ["", "", ""],
+    ["", "", ""]
+  ];
+  currentPlayer = "X";
+  startTime = null;
+  updateBoard();
+}
+
+// Function to clear the board UI
+function updateBoard() {
+  for (let row = 0; row < 3; row++) {
+    for (let col = 0; col < 3; col++) {
+      let cell = document.getElementById(`cell${row}${col}`);
+      cell.innerText = ""; // Clear the text content of each cell
+    }
+  }
+  updateMessage(); // Update message to display initial win status
+}
+
+// Initial update of message to display initial win status
+updateMessage();
+</script>
+
+</body>
+</html>

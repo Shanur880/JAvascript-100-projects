@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<!-- Header for the To-Do List -->
+<h2>To-Do List</h2>
+
+<!-- Input field for entering a new task -->
+<input id="taskInput" type="text" placeholder="New task">
+
+<!-- Button to add the new task to the list -->
+<button onclick="addTask()">Add</button>
+
+<!-- Unordered list to display the tasks -->
+<ul id="taskList"></ul>
+
+<script>
+  // Function to add a new task to the list
+  function addTask() {
+    // Get the value entered in the input field
+    const taskText = document.getElementById("taskInput").value;
+
+    // If the input is empty, exit the function
+    if (taskText === "") return;
+
+    // Create a new list item element
+    const task = document.createElement("li");
+
+    // Set the text of the list item to the entered task text
+    task.innerText = taskText;
+
+    // Add a click event to toggle the 'completed' class on the task
+    task.onclick = () => task.classList.toggle("completed");
+
+    // Add a double-click event to remove the task from the list
+    task.ondblclick = () => task.remove();
+
+    // Append the new task to the task list
+    document.getElementById("taskList").appendChild(task);
+
+    // Clear the input field
+    document.getElementById("taskInput").value = "";
+  }
+</script>
+
+</body>
+</html>

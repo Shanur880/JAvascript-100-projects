@@ -1,0 +1,120 @@
+<!--ey Concepts and Usage of Functions
+DOM Manipulation:
+
+Access and manipulate HTML elements using JavaScript.
+Event Listeners:
+
+Attach events such as onclick to elements to handle user interactions.
+Arrays:
+
+Use arrays to store and manage the list of tasks.
+Function Explanations
+addTask():
+
+Retrieves the value from the input field.
+Adds a new task object to the tasks array.
+Calls renderTasks() to update the displayed list.
+renderTasks():
+
+Clears the current list of tasks in the todoList element.
+Iterates over the tasks array to create and append list items (li) for each task.
+Each list item has an onclick event to toggle its completion status and a delete button to remove the task.
+toggleTask(index):
+
+Toggles the completed status of the task at the given index.
+Calls renderTasks() to update the displayed list.
+deleteTask(index):
+
+Removes the task at the given index from the tasks array using splice.
+Calls renderTasks() to update the displayed list.
+Enhancements
+Added an unordered list (<ul>) with the ID todoList to display the tasks.
+Improved task rendering to handle task completion and deletion.
+Added comments for clarity and improved readability.   -->
+<!-- 
+Key Concepts:
+Create a simple to-do list application where users can add, remove, and mark tasks as completed.
+
+Key Concepts:
+- DOM manipulation
+- Event listeners
+- Arrays 
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+</head>
+<body>
+    <h1>To-Do List</h1>
+    <input id="task" type="text" placeholder="New Task">
+    <button onclick="addTask()">Add Task</button>
+    <ul id="todoList"></ul> <!-- Added an unordered list to display the tasks -->
+
+    <script>
+        // Initialize an empty array to hold the tasks
+        const tasks = [];
+
+        // Function to add a new task
+        function addTask() {
+            // Get the value from the input field
+            const taskInput = document.getElementById("task").value;
+            // Add the new task to the tasks array with a default completion status of false
+            tasks.push({ text: taskInput, completed: false });
+            // Render the updated tasks list
+            renderTasks();
+        }
+
+        // Function to render the tasks on the webpage
+        function renderTasks() {
+            // Get the todoList element by its ID
+            const todoList = document.getElementById("todoList");
+            // Clear the current content of the todoList element
+            todoList.innerHTML = "";
+            // Iterate through the tasks array
+            tasks.forEach((task, index) => {
+                // Create a new list item element
+                const li = document.createElement("li");
+                // Set the inner HTML of the list item to the task text
+                li.innerHTML = task.text;
+                // If the task is completed, style it with a line-through
+                if (task.completed) {
+                    li.style.textDecoration = "line-through";
+                }
+                // Add an onclick event to toggle the task's completion status
+                li.onclick = () => toggleTask(index);
+                // Create a delete button
+                const deleteButton = document.createElement("button");
+                // Set the button text to "Delete"
+                deleteButton.innerText = "Delete";
+                // Add an onclick event to delete the task
+                deleteButton.onclick = () => deleteTask(index);
+                // Append the delete button to the list item
+                li.appendChild(deleteButton);
+                // Append the list item to the todoList element
+                todoList.appendChild(li);
+            });
+        }
+
+        // Function to toggle the completion status of a task
+        function toggleTask(index) {
+            // Toggle the completed status of the task at the given index
+            tasks[index].completed = !tasks[index].completed;
+            // Render the updated tasks list
+            renderTasks();
+        }
+
+        // Function to delete a task
+        function deleteTask(index) {
+            // Remove the task at the given index from the tasks array
+            tasks.splice(index, 1);
+            // Render the updated tasks list
+            renderTasks();
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Countdown Timer</h2>
+<!-- Input fields for minutes and seconds -->
+<input id="minutes" type="number" placeholder="Minutes">
+<input id="seconds" type="number" placeholder="Seconds">
+<!-- Button to start the timer -->
+<button onclick="startTimer()">Start Timer</button>
+<!-- Display area for the timer -->
+<p id="timeDisplay"></p>
+
+<script>
+let timer; // Variable to store the interval timer
+
+// Function to start the countdown timer
+function startTimer() {
+  clearInterval(timer); // Clear any existing timer interval
+  
+  // Get minutes and seconds input values
+  let minutes = parseInt(document.getElementById("minutes").value);
+  let seconds = parseInt(document.getElementById("seconds").value);
+  const display = document.getElementById("timeDisplay"); // Display area
+  
+  // Set interval to update timer every second
+  timer = setInterval(() => {
+    // Check if timer has reached zero
+    if (seconds === 0 && minutes === 0) {
+      clearInterval(timer); // Clear interval when timer ends
+      display.innerText = "Time's up!"; // Display message when timer ends
+    } else {
+      // Decrease seconds, adjust minutes if necessary
+      if (seconds === 0) {
+        minutes--;
+        seconds = 59;
+      } else {
+        seconds--;
+      }
+      // Display current time in MM:SS format
+      display.innerText = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+    }
+  }, 1000); // Update every 1000ms (1 second)
+}
+</script>
+
+</body>
+</html>
+<!-- This code sets up a countdown timer in HTML and JavaScript. When you enter minutes and seconds, clicking "Start Timer" initiates a countdown. It displays the remaining time dynamically and stops when the time reaches zero, showing "Time's up!". -->

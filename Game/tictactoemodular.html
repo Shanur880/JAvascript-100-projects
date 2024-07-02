@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  table { margin: auto; }
+  td { width: 50px; height: 50px; text-align: center; font-size: 24px; cursor: pointer; border: 1px solid black; }
+</style>
+</head>
+<body>
+
+<h2>Tic-Tac-Toe</h2>
+<table>
+  <tr>
+    <td id="cell00" onclick="makeMove(0, 0)"></td>
+    <td id="cell01" onclick="makeMove(0, 1)"></td>
+    <td id="cell02" onclick="makeMove(0, 2)"></td>
+  </tr>
+  <tr>
+    <td id="cell10" onclick="makeMove(1, 0)"></td>
+    <td id="cell11" onclick="makeMove(1, 1)"></td>
+    <td id="cell12" onclick="makeMove(1, 2)"></td>
+  </tr>
+  <tr>
+    <td id="cell20" onclick="makeMove(2, 0)"></td>
+    <td id="cell21" onclick="makeMove(2, 1)"></td>
+    <td id="cell22" onclick="makeMove(2, 2)"></td>
+  </tr>
+</table>
+<p id="message"></p>
+
+<script>
+    let board = [
+    ["", "", ""],
+    ["", "", ""],
+    ["", "", ""]
+  ];
+  let currentPlayer = "X";
+  
+  function makeMove(cell, row, col) {
+    if (isValidMove(row, col)) {
+      updateBoard(row, col);
+      cell.innerText = currentPlayer;
+      if (checkWin()) {
+        displayMessage(`${currentPlayer} wins!`);
+      } else if (isDraw()) {
+        displayMessage("It's a draw!");
+      } else {
+        switchPlayer();
+      }
+    }
+  }
+  
+  function isValidMove(row, col) {
+    return board[row][col] === "";
+  }
+  
+  function updateBoard(row, col) {
+    board[row][col] = currentPlayer;
+  }
+  
+  function checkWin() {
+    const winPatterns = [
+      [[0, 0], [0, 1], [0, 2]],
+      [[1, 0], [1, 1], [1, 2]],
+      [[2, 0], [2, 1], [2, 2]],
+      [[0, 0], [1, 0], [2, 0]],
+      [[0, 1], [1, 1], [2, 1]],
+      [[0, 2], [1, 2], [2, 2]],
+      [[0, 0], [1, 1], [2, 2]],
+      [[0, 2], [1, 1], [2, 0]]
+    ];
+    return winPatterns.some(pattern => 
+      pattern.every(([row, col]) => board[row][col] === currentPlayer)
+    );
+  }
+  
+  function isDraw() {
+    return board.flat().every(cell => cell !== "");
+  }
+  
+  function switchPlayer() {
+    currentPlayer = currentPlayer === "X" ? "O" : "X";
+  }
+  
+  function displayMessage(message) {
+    document.getElementById("message").innerText = message;
+  }
+
+  
+</script>
+
+</body>
+</html>

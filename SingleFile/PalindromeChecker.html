@@ -1,0 +1,43 @@
+<!-- Create a function that checks if a given string is a palindrome (reads the same forwards and backwards).
+
+Key Concepts:
+
+String manipulation
+Loops and conditionals -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cHERCKER</title>
+</head>
+<body>
+    <H1>Plaindrome Checker</H1>
+    <input type="text" name="" id="textInput" placeholder="Enter Text">
+    <button onclick="checkPalindrome">Check</button>
+    <p id="result"></p>
+    <script>
+     
+
+        function checkPalindrome() {
+            const text = document.getElementById("textInput").value.toLowerCase().replace(/[^a-z0-9]/g, '');
+            let isPalindrome = true;
+            for (let i = 0; i < text.length / 2; i++) {
+              if (text[i] !== text[text.length - 1 - i]) {
+                isPalindrome = false;
+                break;
+              }
+            }
+            document.getElementById("result").innerText = isPalindrome ? "It's a palindrome!" : "It's not a palindrome.";
+          }
+          
+    </script>
+</body>
+</html>
+
+<!--    function checkPalidrome(){
+            const text=document.getElementById("textInput").value.toLowerCase().replace(/[^a-z0-9]/g, '');
+            const isPalindrome=tex===reversedText;
+            document.getElementById("result").innerText=isPalindrome ? "It's a palindrome!" : "It's not a palindrome.";
+        }
+ -->

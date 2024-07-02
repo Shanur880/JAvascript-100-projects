@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Number Guessing Game</h1>
+    <input type="number" id="guessInput" placeholder="Enter Your Guess">
+    <button onclick="checkGuess()">Guess</button>
+    <p id="guessResult"></p>
+
+    <script>
+        // Initialize the target number
+        let targetNumber = Math.floor(Math.random() * 100) + 1;
+        const tolerance = 10; // Adjust the tolerance range as needed
+
+        function checkGuess() {
+            const guess = parseInt(document.getElementById("guessInput").value);
+
+            if (isNaN(guess)) {
+                document.getElementById("guessResult").innerText = "Please enter a valid number.";
+            } else {
+                if (guess === targetNumber) {
+                    document.getElementById("guessResult").innerText = `Congratulations! You guessed it right: ${targetNumber}`;
+                    targetNumber = Math.floor(Math.random() * 100) + 1;
+                } else if (Math.abs(guess - targetNumber) <= tolerance) {
+                    document.getElementById("guessResult").innerText = `Close! The target number was ${targetNumber}.`;
+                } else if (guess < targetNumber) {
+                    document.getElementById("guessResult").innerText = "Too low. Try again.";
+                } else {
+                    document.getElementById("guessResult").innerText = "Too high. Try again.";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+
+<!-- let targetNumber = Math.floor(Math.random() * 100) + 1;
+let guessCount = 0;
+const guessLimit = 10;
+
+function checkGuess() {
+  const guess = parseInt(document.getElementById("guessInput").value);
+  guessCount++;
+  if (guess === targetNumber) {
+    document.getElementById("guessResult").innerText = `Congratulations! You guessed it right in ${guessCount} tries.`;
+    resetGame();
+  } else if (guessCount >= guessLimit) {
+    document.getElementById("guessResult").innerText = `Sorry, you've reached the maximum number of guesses. The number was ${targetNumber}.`;
+    resetGame();
+  } else if (guess < targetNumber) {
+    document.getElementById("guessResult").innerText = "Too low. Try again!";
+  } else {
+    document.getElementById("guessResult").innerText = "Too high. Try again!";
+  }
+}
+
+function resetGame() {
+  targetNumber = Math.floor(Math.random() * 100) + 1;
+  guessCount = 0;
+}
+ -->

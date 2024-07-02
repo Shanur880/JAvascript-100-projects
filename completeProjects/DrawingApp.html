@@ -1,0 +1,102 @@
+<input type="color" id="colorPicker" value="#000000">
+<input type="number" id="brushSize" value="2" min="1" max="10">
+<canvas id="drawingCanvas" width="400" height="400" style="border:1px solid #000000;"></canvas>
+
+<script>
+const canvas = document.getElementById('drawingCanvas');
+const ctx = canvas.getContext('2d');
+let drawing = false;
+
+// Event listeners for mouse actions
+canvas.addEventListener('mousedown', () => {
+  drawing = true;
+});
+
+canvas.addEventListener('mouseup', () => {
+  drawing = false;
+});
+
+canvas.addEventListener('mousemove', draw);
+
+// Function to handle drawing
+function draw(event) {
+  if (!drawing) return;
+
+  const color = document.getElementById('colorPicker').value;
+  const size = document.getElementById('brushSize').value;
+
+  // Set drawing parameters
+  ctx.lineWidth = size;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = color;
+
+  // Draw lines based on mouse movement
+  ctx.lineTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+}
+</script>
+<!-- Comments and Function Usage Explained:
+Canvas and Context Setup:
+
+const canvas = document.getElementById('drawingCanvas');: Retrieves the canvas element from the HTML document.
+const ctx = canvas.getContext('2d');: Gets the 2D drawing context for the canvas, which allows drawing on it.
+Drawing Control Variables:
+
+let drawing = false;: Flag to indicate whether the user is currently drawing on the canvas.
+Event Listeners:
+
+canvas.addEventListener('mousedown', () => { drawing = true; });: Sets drawing to true when the mouse button is pressed down on the canvas, indicating the start of a drawing action.
+canvas.addEventListener('mouseup', () => { drawing = false; });: Sets drawing to false when the mouse button is released, indicating the end of a drawing action.
+canvas.addEventListener('mousemove', draw);: Calls the draw function whenever the mouse is moved over the canvas, allowing continuous drawing as the mouse moves.
+Draw Function:
+
+function draw(event) { ... }: Handles the actual drawing on the canvas.
+if (!drawing) return;: Checks if the user is currently drawing; if not, exits the function early.
+const color = document.getElementById('colorPicker').value;: Retrieves the selected color from the color picker input element.
+const size = document.getElementById('brushSize').value;: Retrieves the selected brush size from the number input element.
+Drawing Configuration:
+ctx.lineWidth = size;: Sets the line width (brush size).
+ctx.lineCap = 'round';: Sets the line cap style to round for smooth ends.
+ctx.strokeStyle = color;: Sets the stroke (line) color.
+Drawing Actions:
+ctx.lineTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);: Defines a line from the last drawn point to the current mouse position adjusted for canvas offset.
+ctx.stroke();: Draws the defined line on the canvas.
+ctx.beginPath();: Starts a new path for the next segment of the drawing.
+ctx.moveTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);: Moves the drawing position to the current mouse position, preparing for the next drawing segment.
+This setup allows users to draw on the canvas using a selected color and brush size, providing a basic interactive drawing experience.
+
+<input type="color" id="colorPicker" value="#000000">
+<input type="number" id="brushSize" value="2" min="1" max="10">
+<canvas id="drawingCanvas" width="400" height="400" style="border:1px solid #000000;"></canvas>
+
+<script>
+const canvas = document.getElementById('drawingCanvas');
+const ctx = canvas.getContext('2d');
+let drawing = false;
+
+canvas.addEventListener('mousedown', () => drawing = true);
+canvas.addEventListener('mouseup', () => drawing = false);
+canvas.addEventListener('mousemove', draw);
+
+function draw(event) {
+  if (!drawing) return;
+  const color = document.getElementById('colorPicker').value;
+  const size = document.getElementById('brushSize').value;
+  ctx.lineWidth = size;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = color;
+  
+  ctx.lineTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+}
+</script>
+
+
+
+
+
+ -->

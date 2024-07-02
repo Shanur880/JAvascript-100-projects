@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Virtual Pet</h2>
+<div id="petContainer">
+  <img id="pet" src="images/pet.png" alt="Virtual Pet">
+</div>
+<button onclick="feed()">Feed</button>
+<button onclick="play()">Play</button>
+<p id="petStatus">Pet Status</p>
+
+<script>
+class VirtualPet {
+  constructor(name, hunger, happiness) {
+    this.name = name;
+    this.hunger = hunger;
+    this.happiness = happiness;
+  }
+
+  feed() {
+    this.hunger -= 10;
+    this.updateStatus();
+  }
+
+  play() {
+    this.happiness += 10;
+    this.updateStatus();
+  }
+
+  updateStatus() {
+    let status = `${this.name} - Hunger: ${this.hunger}, Happiness: ${this.happiness}`;
+    document.getElementById("petStatus").innerText = status;
+  }
+}
+
+const pet = new VirtualPet('Fluffy', 50, 50);
+
+function feed() {
+  pet.feed();
+}
+
+function play() {
+  pet.play();
+}
+</script>
+
+</body>
+</html>

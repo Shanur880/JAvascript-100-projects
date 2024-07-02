@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>countWords Counter</h2>
+<textarea id="textInput" oninput="countWords()" placeholder="Type something..."></textarea>
+<p id="countWords">countWords Count: 0</p>
+
+<script>
+    function countWords() {
+        const text = document.getElementById("textInput").value;
+        const countWords = text.trim().split(/\s+/).length;
+        document.getElementById("countWords").innerText = `Word Count: ${countWords}`;
+      }
+      
+</script>
+
+</body>
+</html>

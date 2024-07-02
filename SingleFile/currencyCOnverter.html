@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>courrency converter</h1>
+    <input type="number" name="" id="amountInput" placeholder="Amount in USD">
+    <button onclick="convertCurrency()"> get result</button>
+    <p id="convertedAmount"></p>
+    <script>
+        function convertCurrency(){
+            const amount=parseFloat(document.getElementById("amountInput").value)
+            const  exchangeRate=0.85;
+            const convertedAmount=amount*exchangeRate;
+            document.getElementById("convertedAmount").innerText=`Converted Amount: ${convertedAmount.toFixed(2)}`;
+        } 
+    </script>
+</body>
+</html>

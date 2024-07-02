@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>GitHub Profile Viewer</h2>
+<input id="usernameInput" type="text" placeholder="Enter GitHub username">
+<button onclick="fetchProfile()">Fetch Profile</button>
+<div id="profileInfo"></div>
+<div id="repositories"></div>
+
+<script>
+async function fetchProfile() {
+  const username = document.getElementById("usernameInput").value;
+  const profileResponse = await fetch(`https://api.github.com/users/${username}`);
+  const profileData = await profileResponse.json();
+  const repositoriesResponse = await fetch(`https://api.github.com/users/${username}/repos`);
+  const repositoriesData = await repositoriesResponse.json();
+
+  const profileInfo = document.getElementById("profileInfo");
+  profileInfo.innerHTML = `
+    <h3>${profileData.name} (${profileData.login})</h3>
+    <p>Followers: ${profileData.followers}, Following: ${profileData.following}</p>
+    <p>Public Repositories: ${profileData.public_repos}</p>
+  `;
+
+  const repositoriesContainer = document.getElementById("repositories");
+  repositoriesContainer.innerHTML = `<h3>Repositories</h3>`;
+  repositoriesData.forEach(repo => {
+    const repoElement = document.createElement('p');
+    repoElement.innerHTML = `<a href="${repo.html_url}" target="_blank">${repo.name}</a>: ${repo.description}`;
+    repositoriesContainer.appendChild(repoElement);
+  });
+}
+</script>
+
+</body>
+</html>
+<!-- profileInfo.innerHTML = `
+  <h3>${profileData.name} (${profileData.login})</h3>
+  <img src="${profileData.avatar_url}" width="100" height="100">
+  <p>${profileData.bio}</p>
+  <p>Followers: ${profileData.followers}, Following: ${profileData.following}</p>
+  <p>Public Repositories: ${profileData.public_repos}</p>
+`;
+ -->

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Memory Game</h2>
+<div id="gameBoard"></div>
+<button onclick="resetGame()">Reset Game</button>
+
+<script>
+const symbols = ['🌟', '🍎', '🍉', '🍕', '🚀', '🎈', '🎲', '⚽'];
+let cards = [...symbols, ...symbols];
+let firstCard = null;
+let secondCard = null;
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+function createGameBoard() {
+  cards = shuffle(cards);
+  const gameBoard = document.getElementById("gameBoard");
+  gameBoard.innerHTML = '';
+  cards.forEach((symbol, index) => {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.dataset.symbol = symbol;
+    card.dataset.index = index;
+    card.addEventListener('click', revealCard);
+    gameBoard.appendChild(card);
+  });
+}
+
+function revealCard(event) {
+  const selectedCard = event.target;
+  if (!firstCard) {
+    firstCard = selectedCard;
+    selectedCard.innerText = selectedCard.dataset.symbol;
+  } else if (firstCard && !secondCard && selectedCard !== firstCard) {
+    secondCard = selectedCard;
+    selectedCard.innerText = selectedCard.dataset.symbol;
+    setTimeout(checkMatch, 1000);
+  }
+}
+
+function checkMatch() {
+  if (firstCard.dataset.symbol === secondCard.dataset.symbol) {
+    firstCard.removeEventListener('click', revealCard);
+    secondCard.removeEventListener('click', revealCard);
+    firstCard = null;
+    secondCard = null;
+  } else {
+    firstCard.innerText = '';
+    secondCard.innerText = '';
+    firstCard = null;
+    secondCard = null;
+  }
+}
+
+function resetGame() {
+  firstCard = null;
+  secondCard = null;
+  createGameBoard();
+}
+
+createGameBoard();
+</script>
+
+<style>
+.card {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background-color: #f0f0f0;
+  text-align: center;
+  line-height: 50px;
+  margin: 5px;
+  cursor: pointer;
+  font-size: 24px;
+}
+</style>
+
+</body>
+</html>
